@@ -224,8 +224,96 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 5. Quick Search Classification System ---
-    const showClassificationResult = (productKey) => {
-        const product = COMMODITY_DB[productKey];
+    
+    // Heuristic Mock AI Classifier for Arbitrary Products
+    const generateMockClassification = (query) => {
+        const q = query.toLowerCase();
+        
+        const foodKeywords = ["cake", "cookie", "bread", "chocolate", "rice", "coffee", "tea", "food", "milk", "cheese", "sauce", "sugar", "fruit", "biscuit", "pastry", "flour", "yeast", "butter", "sourdough", "pasta", "noodle", "beer", "wine", "juice", "beverage", "banana", "apple", "grape", "orange", "meat", "fish"];
+        const metalKeywords = ["knife", "blade", "tool", "spoon", "fork", "scissor", "steel", "iron", "metal", "hammer", "screwdriver", "pliers", "wrench", "nail", "screw", "copper", "aluminum", "brass", "key", "lock"];
+        const techKeywords = ["phone", "computer", "laptop", "battery", "led", "screen", "wire", "cable", "camera", "sensor", "tv", "television", "charger", "earbuds", "headphone", "device", "tablet", "processor", "chip", "robot", "watch", "smartwatch", "router", "modem"];
+        const textileKeywords = ["shirt", "pants", "dress", "socks", "wool", "silk", "cotton", "polyester", "hat", "jacket", "coat", "clothing", "apparel", "fabric", "t-shirt", "jeans", "suit", "scarf", "glove", "shoe", "sneaker", "boot", "bag", "leather"];
+        const vehicleKeywords = ["car", "bike", "bicycle", "truck", "motorcycle", "vehicle", "wheel", "scooter", "bus", "engine", "aircraft", "boat", "tire"];
+
+        if (foodKeywords.some(keyword => q.includes(keyword))) {
+            return {
+                code_hs: "1905.90",
+                code_ahtn: ".90.90",
+                title: `${query.charAt(0).toUpperCase() + query.slice(1)} (Foodstuff / Agricultural Product)`,
+                description: "Chapter 19 (Preparations of cereals, flour, starch or milk; pastrycooks' products) > Heading 19.05 (Bread, pastry, cakes, biscuits and other bakers' wares...)",
+                rule: "GIR 1 (Mock AI)",
+                rationale: `Classified under GIR 1. The product '${query}' exhibits characteristics of prepared foodstuffs or agricultural products. It fits under Chapter 19 or Chapter 21, and specifically under Heading 19.05 which governs flour-based food preparations.`,
+                thai_hint: "Declared under Thai statistical code 1905.90.90.000. Subject to standard import duty of 30% or 17 Baht/kg. Subject to import regulations and clearance from the Thai FDA (Food and Drug Administration)."
+            };
+        }
+        
+        if (metalKeywords.some(keyword => q.includes(keyword))) {
+            return {
+                code_hs: "8211.92",
+                code_ahtn: ".92.91",
+                title: `${query.charAt(0).toUpperCase() + query.slice(1)} (Metal Article / Cutlery)`,
+                description: "Chapter 82 (Tools, implements, cutlery, spoons and forks of base metal...) > Heading 82.11 (Knives with cutting blades...) or Chapter 73 for general articles of steel.",
+                rule: "GIR 3(b) (Mock AI)",
+                rationale: `Classified under GIR 3(b) (Essential Character) or GIR 1. The product '${query}' is identified as an article of base metal (Chapter 82/73) intended for mechanical work or cutlery utility, where the metal provides its primary character.`,
+                thai_hint: "Declared under Thai statistical code 8211.92.91.000. Subject to 10% standard import duty. Subject to standard customs clearance documentation, no import permits required."
+            };
+        }
+
+        if (techKeywords.some(keyword => q.includes(keyword))) {
+            return {
+                code_hs: "8517.13",
+                code_ahtn: ".13.00",
+                title: `${query.charAt(0).toUpperCase() + query.slice(1)} (Electronic / Digital Device)`,
+                description: "Chapter 85 (Electrical machinery and equipment and parts thereof; sound recorders and reproducers...) > Heading 85.17 (Smartphones/telephony) or Heading 84.71 (Automatic data processing machines)",
+                rule: "GIR 1 (Mock AI)",
+                rationale: `Classified under GIR 1. The product '${query}' is an electronic device or accessory falling under Chapter 85/84, which governs telecommunications and automatic data processing machinery.`,
+                thai_hint: "Declared under Thai statistical code 8517.13.00.000. Subject to 0% standard import duty under the Information Technology Agreement (ITA). May require NBTC (telecommunications) radio frequency import certification."
+            };
+        }
+
+        if (textileKeywords.some(keyword => q.includes(keyword))) {
+            return {
+                code_hs: "6109.10",
+                code_ahtn: ".10.20",
+                title: `${query.charAt(0).toUpperCase() + query.slice(1)} (Apparel / Textile Article)`,
+                description: "Chapter 61 or 62 (Articles of apparel and clothing accessories, knitted or crocheted, or not knitted/crocheted)",
+                rule: "GIR 1 (Mock AI)",
+                rationale: `Classified under GIR 1. The product '${query}' is classified as an article of apparel or textile material falling under Chapters 61 or 62, which govern worn clothing items based on material, knitting, and styling characteristics.`,
+                thai_hint: "Declared under Thai statistical code 6109.10.20.000. Subject to standard import duty of 30%. Preferential rates (0%-5%) apply if imported from FTA partners with a valid Certificate of Origin."
+            };
+        }
+
+        if (vehicleKeywords.some(keyword => q.includes(keyword))) {
+            return {
+                code_hs: "8703.80",
+                code_ahtn: ".80.98",
+                title: `${query.charAt(0).toUpperCase() + query.slice(1)} (Vehicular Transport / Parts)`,
+                description: "Chapter 87 (Vehicles other than railway or tramway rolling-stock, and parts and accessories thereof) > Heading 87.03 (Motor cars and passenger vehicles)",
+                rule: "GIR 1 (Mock AI)",
+                rationale: `Classified under GIR 1. The product '${query}' is identified as a vehicle or part of a transport system, placing it directly under Chapter 87.`,
+                thai_hint: "Declared under Thai statistical code 8703.80.98.000. Subject to standard passenger car import duty (80%) or lower rates under regional EV promotion packages."
+            };
+        }
+
+        // Catch-all general category: plastic articles
+        return {
+            code_hs: "3926.90",
+            code_ahtn: ".90.99",
+            title: `${query.charAt(0).toUpperCase() + query.slice(1)} (General Commodity)`,
+            description: "Chapter 39 (Plastics and articles thereof) > Heading 39.26 (Other articles of plastics and articles of other materials...)",
+            rule: "GIR 1 / 3(b) (Mock AI)",
+            rationale: `Classified under GIR 1 or GIR 3(b) based on general composition. The product '${query}' does not map to a specific technical chapter, so it is classified under Chapter 39 as a generic article of plastic/consumer commodity.`,
+            thai_hint: "Declared under Thai statistical code 3926.90.99.000. Subject to 20% standard import duty. Subject to standard customs clearance check."
+        };
+    };
+
+    const showClassificationResult = (productOrKey) => {
+        let product;
+        if (typeof productOrKey === 'string') {
+            product = COMMODITY_DB[productOrKey];
+        } else {
+            product = productOrKey;
+        }
         if (!product) return;
         
         // Populate text content
@@ -238,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resThaiHint.textContent = product.thai_hint;
         
         // Style changes on the rule tag
-        if (product.rule === "GIR 1") {
+        if (product.rule.startsWith("GIR 1")) {
             resRuleTag.style.background = "rgba(0, 242, 254, 0.15)";
             resRuleTag.style.borderColor = "rgba(0, 242, 254, 0.3)";
             resRuleTag.style.color = "var(--color-accent-teal)";
@@ -271,6 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (foundKey) {
                 showClassificationResult(foundKey);
+            } else {
+                // Generate a dynamic fallback report based on search query
+                const mockResult = generateMockClassification(commoditySearch.value.trim());
+                showClassificationResult(mockResult);
             }
         } else {
             searchClearBtn.style.display = 'none';
