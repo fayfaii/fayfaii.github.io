@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fay | Customs Officer & Trade Intelligence</title>
+    <meta name="description" content="Portfolio of Fay, a Customs Officer specializing in Trade Compliance, Tariff Classification, and AI-driven customs solutions.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Frosted Glass Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 8V16M9 11L12 8L15 11" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#00F2FE" />
+                            <stop offset="100%" stop-color="#F5A623" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>FAY<span class="highlight">.TRADE</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#classifier" class="nav-link">GIR Assistant</a>
+                <a href="#skills" class="nav-link">Expertise</a>
+                <a href="#experience" class="nav-link">Timeline</a>
+                <a href="#showcase" class="nav-link">Interests</a>
+                <a href="#contact" class="nav-btn">Contact</a>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+        <nav class="mobile-nav-links">
+            <a href="#about" class="mobile-link">About</a>
+            <a href="#classifier" class="mobile-link">GIR Assistant</a>
+            <a href="#skills" class="mobile-link">Expertise</a>
+            <a href="#experience" class="mobile-link">Timeline</a>
+            <a href="#showcase" class="mobile-link">Interests</a>
+            <a href="#contact" class="mobile-btn">Contact Me</a>
+        </nav>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="about" class="hero-section">
+            <div class="hero-bg-container">
+                <img src="assets/compliance_tech_hero.png" alt="Compliance Tech Hero Background" class="hero-bg-img">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="container hero-content">
+                <div class="badge animate-fade-in">Customs Intelligence & AI</div>
+                <h1 class="animate-fade-in delay-1">Navigating Trade Compliance.<br><span class="gradient-text">Innovating with AI.</span></h1>
+                <p class="hero-desc animate-fade-in delay-2">
+                    I am a Customs Officer specializing in tariff classification, border compliance, and digital automation. Combining deep expertise in the Harmonized System (HS/AHTN) with a passion for web development and machine learning to build smarter trade solutions.
+                </p>
+                <div class="hero-actions animate-fade-in delay-3">
+                    <a href="#classifier" class="btn btn-primary">Try Classification Assistant</a>
+                    <a href="#experience" class="btn btn-secondary">View Journey</a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse-icon">
+                    <div class="wheel"></div>
+                </div>
+                <span>Scroll to explore</span>
+            </div>
+        </section>
+
+        <!-- Interactive Customs Classifier Section -->
+        <section id="classifier" class="section bg-midnight">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Interactive Concept Widget</span>
+                    <h2 class="section-title">AHTN Classification Assistant</h2>
+                    <p class="section-desc">
+                        Determining the correct 8-digit ASEAN Harmonized Tariff Nomenclature (AHTN) code requires applying the General Interpretative Rules (GIR). Try searching a product or use the GIR Wizard below.
+                    </p>
+                </div>
+
+                <div class="classifier-layout">
+                    <!-- Column 1: Search & Interactive Tools -->
+                    <div class="classifier-card glass">
+                        <div class="card-tabs">
+                            <button class="tab-btn active" data-tab="search">Quick Code Search</button>
+                            <button class="tab-btn" data-tab="wizard">GIR Decision Guide</button>
+                        </div>
+
+                        <!-- Tab Content: Quick Search -->
+                        <div class="tab-content active" id="tab-search">
+                            <p class="tab-instruction">Search common commodities to see how a Customs Officer classifies them under GIR Rules and Thailand regulations.</p>
+                            <div class="search-box">
+                                <input type="text" id="commodity-search" placeholder="Type sourdough bread, knife, smartphone, t-shirt..." autocomplete="off">
+                                <button id="search-clear-btn" class="clear-btn">&times;</button>
+                            </div>
+                            <div class="suggestions-container">
+                                <span class="suggestion-label">Try searching:</span>
+                                <span class="suggestion-tag" data-query="sourdough bread">Sourdough Bread</span>
+                                <span class="suggestion-tag" data-query="kitchen knife">Kitchen Knife</span>
+                                <span class="suggestion-tag" data-query="smartphone">Smartphone</span>
+                                <span class="suggestion-tag" data-query="cotton shirt">Cotton Shirt</span>
+                                <span class="suggestion-tag" data-query="electric vehicle">Electric Car</span>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: GIR Decision Wizard -->
+                        <div class="tab-content" id="tab-wizard">
+                            <p class="tab-instruction">Step-by-step interactive wizard using the General Interpretative Rules (GIR) to classify complex items.</p>
+                            <div class="wizard-steps">
+                                <div class="wizard-progress-bar">
+                                    <div class="progress-fill" style="width: 25%;"></div>
+                                    <div class="progress-step active" data-step="1">1</div>
+                                    <div class="progress-step" data-step="2">2</div>
+                                    <div class="progress-step" data-step="3">3</div>
+                                    <div class="progress-step" data-step="4">4</div>
+                                </div>
+
+                                <div class="step-pane active" id="step-1">
+                                    <h3>Step 1: Product Characteristics</h3>
+                                    <p class="pane-desc">Identify the primary characteristics and materials of the commodity.</p>
+                                    <div class="form-group">
+                                        <label for="wiz-category">Select Primary Category:</label>
+                                        <select id="wiz-category">
+                                            <option value="">-- Choose one --</option>
+                                            <option value="food">Foodstuff & Agriculture (Ch. 1-24)</option>
+                                            <option value="metal">Metals, Cutlery & Tools (Ch. 72-83)</option>
+                                            <option value="electronics">Electronics & Tech (Ch. 84-85)</option>
+                                            <option value="textiles">Textiles & Apparel (Ch. 50-63)</option>
+                                        </select>
+                                    </div>
+                                    <div class="wizard-buttons">
+                                        <button class="btn btn-primary" id="wiz-next-1" disabled>Next Step &rarr;</button>
+                                    </div>
+                                </div>
+
+                                <div class="step-pane" id="step-2">
+                                    <h3>Step 2: Check GIR 1 (Heading Level)</h3>
+                                    <p class="pane-desc">Can the item be classified solely based on the text of the headings and relative section/chapter notes?</p>
+                                    <div class="option-grid">
+                                        <div class="option-card" data-val="yes">
+                                            <h4>Yes (Single Material / Function)</h4>
+                                            <p>The product is a straightforward item clearly described by a single heading description.</p>
+                                        </div>
+                                        <div class="option-card" data-val="no">
+                                            <h4>No (Composite / Mixed Goods / Sets)</h4>
+                                            <p>The product consists of multiple materials, parts, or is sold in a retail set.</p>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-buttons">
+                                        <button class="btn btn-secondary wiz-prev" data-target="1">&larr; Back</button>
+                                        <button class="btn btn-primary" id="wiz-next-2" disabled>Next Step &rarr;</button>
+                                    </div>
+                                </div>
+
+                                <div class="step-pane" id="step-3">
+                                    <h3>Step 3: Apply Secondary Rules (GIR 2 - 4)</h3>
+                                    <p class="pane-desc" id="gir-rule-prompt">Resolving conflicts between multiple applicable headings.</p>
+                                    <div class="option-grid" id="step-3-options">
+                                        <!-- Will be dynamically populated based on Step 2 choice -->
+                                    </div>
+                                    <div class="wizard-buttons">
+                                        <button class="btn btn-secondary wiz-prev" data-target="2">&larr; Back</button>
+                                        <button class="btn btn-primary" id="wiz-next-3" disabled>Next Step &rarr;</button>
+                                    </div>
+                                </div>
+
+                                <div class="step-pane" id="step-4">
+                                    <h3>Step 4: Final Classification Review</h3>
+                                    <p class="pane-desc">Review the structured path to classify your item under the AHTN framework.</p>
+                                    <div class="wizard-summary-box">
+                                        <div class="summary-item">
+                                            <span class="sum-label">Category:</span>
+                                            <span class="sum-val" id="sum-category">-</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="sum-label">Primary Rule:</span>
+                                            <span class="sum-val" id="sum-rule">-</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="sum-label">Selected Detail:</span>
+                                            <span class="sum-val" id="sum-detail">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-buttons">
+                                        <button class="btn btn-secondary wiz-prev" data-target="3">&larr; Back</button>
+                                        <button class="btn btn-primary" id="wiz-finish">Generate HS Report</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Live Results Output -->
+                    <div class="results-card glass">
+                        <div class="results-header">
+                            <svg class="results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <h3>Classification Report</h3>
+                        </div>
+
+                        <div class="results-placeholder" id="results-placeholder">
+                            <svg class="placeholder-icon animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                <path d="M8 11h6"/>
+                            </svg>
+                            <p>Search a commodity or complete the GIR wizard to view the 8-digit tariff code, statutory rationale, and custom import statistical details.</p>
+                        </div>
+
+                        <div class="results-content hidden" id="results-content">
+                            <div class="results-badge" id="res-badge">AHTN Code</div>
+                            <div class="code-display">
+                                <span class="hs-part" id="res-hs-code">0000.00</span>
+                                <span class="ahtn-part" id="res-ahtn-code">.00</span>
+                            </div>
+                            <div class="commodity-title" id="res-title">Product Name</div>
+
+                            <div class="detail-section">
+                                <h4>Tariff Chapter & Heading Description</h4>
+                                <p id="res-description">-</p>
+                            </div>
+
+                            <div class="detail-section">
+                                <h4>GIR Classification Rationale</h4>
+                                <div class="rationale-container">
+                                    <span class="tag-accent" id="res-rule-tag">GIR 1</span>
+                                    <p id="res-rationale">-</p>
+                                </div>
+                            </div>
+
+                            <div class="detail-section highlight-box">
+                                <h4>Thai Customs Statistical Hint</h4>
+                                <p id="res-thai-hint">-</p>
+                                <a href="https://itax.customs.go.th/" target="_blank" rel="noopener" class="external-link">
+                                    Go to Thai Customs Tariff Database
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Core Expertise Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Core Capabilities</span>
+                    <h2 class="section-title">Domain Expertise & Skills</h2>
+                    <p class="section-desc">
+                        Bridging the gap between strict border regulations and digital-era trade efficiency.
+                    </p>
+                </div>
+
+                <div class="skills-grid">
+                    <!-- Card 1 -->
+                    <div class="skill-card glass hover-lift">
+                        <div class="skill-icon-box blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="skill-svg">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Tariff Nomenclature & GIR</h3>
+                        <p>Specialized in the WCO Harmonized System (HS) and the 8-digit ASEAN Harmonized Tariff Nomenclature (AHTN), applying General Interpretative Rules (GIR) for complex classification rulings.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="skill-card glass hover-lift">
+                        <div class="skill-icon-box orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="skill-svg">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <h3>Trade Compliance & Audit</h3>
+                        <p>Auditing import/export declarations, investigating valuation declarations (WTO Valuation Agreement), reviewing certificates of origin, and verifying compliance with Free Trade Agreements (FTAs).</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="skill-card glass hover-lift">
+                        <div class="skill-icon-box teal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="skill-svg">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h3>Border Operations & Security</h3>
+                        <p>Experienced in cargo screening, risk management, post-clearance audits, and enforcement of prohibitions and restrictions on controlled goods.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="skill-card glass hover-lift">
+                        <div class="skill-icon-box teal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="skill-svg">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                        </div>
+                        <h3>Python & Trade Data Analysis</h3>
+                        <p>Writing scripts to analyze customs statistical datasets, automate repetitive audit checks, clean trade declaration logs, and identify tariff anomalies.</p>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="skill-card glass hover-lift">
+                        <div class="skill-icon-box blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="skill-svg">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                        </div>
+                        <h3>Modern Web Development</h3>
+                        <p>Building client-side applications, compliance databases, and interactive tools using semantic HTML, responsive CSS, and native JavaScript.</p>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="skill-card glass hover-lift">
+                        <div class="skill-icon-box orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="skill-svg">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
+                        </div>
+                        <h3>AI & Intelligent Automation</h3>
+                        <p>Exploring artificial intelligence, Large Language Models (LLMs), and prompt engineering to automate document reviews and trade terminology classification matching.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Timeline Section -->
+        <section id="experience" class="section bg-midnight">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">My Journey</span>
+                    <h2 class="section-title">Experience & Education</h2>
+                    <p class="section-desc">
+                        Developing standard-setting customs operations and modernizing tariff validation procedures.
+                    </p>
+                </div>
+
+                <div class="timeline">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2024 - Present</div>
+                        <div class="timeline-content glass">
+                            <h3>Senior Customs Specialist & Developer</h3>
+                            <span class="timeline-company">Customs Administration / Tech Integration</span>
+                            <p>Leading cargo verification and post-clearance audit workflows. Pioneered internal automated scripts and local compliance web tools to streamline tariff cross-checks, saving processing hours for classification reviews.</p>
+                            <div class="timeline-tags">
+                                <span>AHTN 2022</span>
+                                <span>Risk Assessment</span>
+                                <span>Python Automation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2021 - 2024</div>
+                        <div class="timeline-content glass">
+                            <h3>Customs Clearance Officer</h3>
+                            <span class="timeline-company">Customs Department, Sea Port Division</span>
+                            <p>Supervised physical inspections and verified declaration forms against physical shipments. Made official rulings on import classifications, valuation, and rules of origin. Audited 2,000+ commercial shipments.</p>
+                            <div class="timeline-tags">
+                                <span>HS Classification</span>
+                                <span>WTO Valuation</span>
+                                <span>Trade Audit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2019 - 2021</div>
+                        <div class="timeline-content glass">
+                            <h3>Customs Operations Analyst</h3>
+                            <span class="timeline-company">Border Controls & Compliance Unit</span>
+                            <p>Monitored import/export documentation, managed risk profiles for incoming freight, and worked alongside regional partners to enforce border regulations and trade controls.</p>
+                            <div class="timeline-tags">
+                                <span>Regulatory Policy</span>
+                                <span>Import Controls</span>
+                                <span>Trade Policy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Ongoing</div>
+                        <div class="timeline-content glass">
+                            <h3>AI & Software Engineering Specialization</h3>
+                            <span class="timeline-company">Self-Directed Studies</span>
+                            <p>Deep-diving into artificial intelligence, LLM fine-tuning, retrieval-augmented generation (RAG) for regulatory texts, and advanced frontend engineering (JavaScript, UI/UX systems).</p>
+                            <div class="timeline-tags">
+                                <span>Machine Learning</span>
+                                <span>RAG Systems</span>
+                                <span>Web Apps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Showcase: Beyond the Desk -->
+        <section id="showcase" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Beyond the Desk</span>
+                    <h2 class="section-title">My Passions & Pursuits</h2>
+                    <p class="section-desc">
+                        A glimpse into how I spend my time when I'm not auditing cargo declarations or coding customs tools.
+                    </p>
+                </div>
+
+                <div class="showcase-grid">
+                    <!-- Sourdough Column -->
+                    <div class="showcase-card glass">
+                        <div class="showcase-img-wrapper">
+                            <img src="assets/artisan_sourdough.png" alt="Homemade sourdough loaf with golden crust" class="showcase-img">
+                            <div class="showcase-img-badge">Sourdough Baking</div>
+                        </div>
+                        <div class="showcase-body">
+                            <h3>The Art & Science of Fermentation</h3>
+                            <p>
+                                Sourdough baking is a blend of biology, time, and extreme precision. Controlling variables like hydration percentage, ambient temperature, and fermentation activity is highly analytical work. Just like applying General Interpretative Rules in Customs, achieving the perfect golden crust and open crumb requires structure, attention to detail, and a deep appreciation of the process.
+                            </p>
+                            <div class="quote-box">
+                                <span class="quote-icon">“</span>
+                                <p>Sourdough teaches you that patience, hydration, and attention to subtle environmental cues yield the most rewarding outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Column -->
+                    <div class="showcase-card glass">
+                        <div class="showcase-img-wrapper">
+                            <img src="assets/compliance_tech_hero.png" alt="Futuristic AI nodes representing machine learning" class="showcase-img">
+                            <div class="showcase-img-badge">AI Journey</div>
+                        </div>
+                        <div class="showcase-body">
+                            <h3>Learning AI to Transform Logistics</h3>
+                            <p>
+                                I began my AI journey because I saw an opportunity to automate the highly complex, manual process of HS Tariff classification. Trade regulations change rapidly, and search databases can be difficult to navigate. By combining my background in border controls with machine learning, web development, and LLMs, I'm working to design software that makes global trade compliance fast, accessible, and error-free.
+                            </p>
+                            <div class="quote-box">
+                                <span class="quote-icon">“</span>
+                                <p>Technology shouldn't replace the expert; it should serve as an intellectual multiplier for compliance professionals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section bg-midnight">
+            <div class="container">
+                <div class="contact-layout">
+                    <div class="contact-info">
+                        <span class="section-subtitle">Let's Connect</span>
+                        <h2>Get In Touch</h2>
+                        <p>
+                            Interested in customs compliance automation, tariff classification tools, or discussing trade facilitation projects? Let's connect and share ideas.
+                        </p>
+
+                        <div class="contact-details">
+                            <div class="contact-detail-item">
+                                <div class="detail-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>fay.customs.ai@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-detail-item">
+                                <div class="detail-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Location</h4>
+                                    <p>Bangkok, Thailand</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container glass">
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" required placeholder="Your Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required placeholder="your.email@example.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" placeholder="Tariff classification, consulting, project inquiries...">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" required rows="5" placeholder="Write your message here..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Send Message
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="margin-left: 8px;">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                            </button>
+                        </form>
+                        <div id="form-success-msg" class="success-message hidden">
+                            <div class="success-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <h3>Message Sent!</h3>
+                            <p>Thank you for reaching out, Fay will get back to you shortly.</p>
+                            <button id="form-reset-btn" class="btn btn-secondary btn-sm">Send Another Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <span>FAY<span class="highlight">.TRADE</span></span>
+            </div>
+            <p class="footer-copyright">&copy; 2026 Fay. Built for trade compliance and digital innovations. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
