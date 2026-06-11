@@ -139,6 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const aiProvider = document.getElementById('aiProvider').value;
         formData.append('aiProvider', aiProvider);
         
+        // Get Deep PDF reference checkbox state
+        const useCustomsAct = document.getElementById('useCustomsAct').checked;
+        formData.append('useCustomsAct', useCustomsAct);
+        
         // Get selected language
         const language = document.querySelector('input[name="language"]:checked').value;
         formData.append('language', language);
@@ -242,4 +246,20 @@ document.addEventListener('DOMContentLoaded', () => {
     printBtn.addEventListener('click', () => {
         window.print();
     });
+
+    // --- 4. Deep Audit Checkbox Visibility Toggle ---
+    const aiProviderSelect = document.getElementById('aiProvider');
+    const deepAuditContainer = document.getElementById('deep-audit-container');
+
+    function toggleDeepAuditVisibility() {
+        if (aiProviderSelect.value === 'gemini') {
+            deepAuditContainer.style.display = 'flex';
+        } else {
+            deepAuditContainer.style.display = 'none';
+            document.getElementById('useCustomsAct').checked = false; // reset
+        }
+    }
+
+    aiProviderSelect.addEventListener('change', toggleDeepAuditVisibility);
+    toggleDeepAuditVisibility(); // initial run
 });

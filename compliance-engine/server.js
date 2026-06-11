@@ -130,7 +130,7 @@ async function getCustomsActUri(aiClient) {
 // API Endpoint: Run Customs Compliance Audit
 app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
     try {
-        const { commodityDescription, originCountry, tradeDirection, language, webLink, aiProvider } = req.body;
+        const { commodityDescription, originCountry, tradeDirection, language, webLink, aiProvider, useCustomsAct } = req.body;
         const provider = aiProvider || 'gemini';
 
         // Check API key for selected provider
@@ -240,16 +240,18 @@ Analyze the following trade declaration:
                 contentParts.push(filePart);
             }
 
-            // Check and attach the Customs Act PDF reference if available
-            const customsActUri = await getCustomsActUri(ai);
-            if (customsActUri) {
-                console.log("📎 API: Attaching customs act.pdf to Gemini prompt...");
-                contentParts.push({
-                    fileData: {
-                        fileUri: customsActUri,
-                        mimeType: 'application/pdf'
-                    }
-                });
+            // Check and attach the Customs Act PDF reference if requested and available
+            if (useCustomsAct === 'true' || useCustomsAct === true) {
+                const customsActUri = await getCustomsActUri(ai);
+                if (customsActUri) {
+                    console.log("📎 API: Attaching customs act.pdf to Gemini prompt...");
+                    contentParts.push({
+                        fileData: {
+                            fileUri: customsActUri,
+                            mimeType: 'application/pdf'
+                        }
+                    });
+                }
             }
 
             let result;
