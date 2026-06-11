@@ -1,0 +1,82 @@
+[
+  {
+    "agency": "Department of Fisheries (DOF)",
+    "statute": "Fisheries Act B.E. 2560",
+    "scope": "All aquatic animals, fish products, seafood, and live marine species.",
+    "controls": [
+      {
+        "type": "Restricted (Permit Required)",
+        "condition": "Import of frozen, chilled, or fresh seafood/fish for food processing or retail (e.g. Salmon, Tuna, Cod) requires an Import Permit (Form Thor.4) submitted via National Single Window (NSW), and must be accompanied by an official Sanitary/Health Certificate from the country of origin.",
+        "keywords": ["salmon", "tuna", "fish", "seafood", "shrimp", "lobster", "crab", "cod", "mackerel", "marine"]
+      },
+      {
+        "type": "Prohibited (Banned)",
+        "condition": "Import of live pufferfish (family Tetraodontidae) or any food products containing pufferfish meat is strictly prohibited due to tetrodotoxin poisoning risks.",
+        "keywords": ["pufferfish", "puffer fish", "fugu", "tetraodontidae"]
+      }
+    ]
+  },
+  {
+    "agency": "Ministry of Commerce (MOC)",
+    "statute": "Export and Import of Goods Act B.E. 2522",
+    "scope": "Trade protection, safety, and economic quotas.",
+    "controls": [
+      {
+        "type": "Prohibited (Banned)",
+        "condition": "Import of used passenger cars, used motorcycles, and used vehicle parts/engines is strictly prohibited to prevent environmental dumping and road safety hazards.",
+        "keywords": ["used car", "used passenger car", "used motorcycle", "used vehicle", "used engine", "used truck"]
+      },
+      {
+        "type": "Restricted (Quota & Permit Required)",
+        "condition": "Import of agricultural goods including garlic, onions, shallots, rice, and coconut products is subject to tariff-rate quotas (TRQ). Importers must hold an import permit from the Department of Foreign Trade (DFT) and a Certificate of Origin.",
+        "keywords": ["garlic", "onion", "shallot", "rice", "coconut", "copra"]
+      }
+    ]
+  },
+  {
+    "agency": "Food and Drug Administration (FDA)",
+    "statute": "Food Act B.E. 2522 & Cosmetics Act B.E. 2558",
+    "scope": "Human health, consumables, food safety, and medical goods.",
+    "controls": [
+      {
+        "type": "Restricted (Registration Required)",
+        "condition": "All imported processed foods, beverages, bakery wares, canned goods, and dietary supplements for commercial sale require an import license (Form L.4) and food product serial number registration. Thai language labelling is mandatory prior to distribution.",
+        "keywords": ["food", "beverage", "bread", "cake", "supplement", "canned", "candy", "chocolate", "sourdough", "biscuit", "juice", "soda"]
+      },
+      {
+        "type": "Restricted (Notification Required)",
+        "condition": "Import of cosmetics (skincare, makeup, soaps, shampoos) requires online registration and submission of a product notification to the Thai FDA prior to customs clearance.",
+        "keywords": ["cosmetics", "skincare", "makeup", "lipstick", "soap", "shampoo", "lotion", "cream"]
+      }
+    ]
+  },
+  {
+    "agency": "Department of Livestock Development (DLD)",
+    "statute": "Animal Epidemics Act B.E. 2558",
+    "scope": "Animals, meat products, poultry, pork, beef, and animal feed.",
+    "controls": [
+      {
+        "type": "Restricted (Permit & Health Cert)",
+        "condition": "Import of fresh, frozen, or processed meats (pork, beef, chicken, mutton) requires an import permit from the DLD and an official Veterinary Health Certificate. Subject to quarantine inspection at port of entry.",
+        "keywords": ["meat", "pork", "beef", "chicken", "poultry", "mutton", "lamb", "pork chop", "steak", "ham", "bacon"]
+      },
+      {
+        "type": "Temporary Ban (Epidemic Alert)",
+        "condition": "Due to outbreaks of African Swine Fever (ASF), imports of pork and swine products from infected countries (check current DLD alerts list) are temporarily banned.",
+        "keywords": ["pork", "pig", "swine", "bacon", "ham", "lard"]
+      }
+    ]
+  },
+  {
+    "agency": "Excise Department",
+    "statute": "Excise Tariff Act B.E. 2560",
+    "scope": "Specific luxury, health-impact, or environmental-impact commodities.",
+    "controls": [
+      {
+        "type": "Restricted (Excise Duty Subject)",
+        "condition": "Import of passenger automobiles, motorcycles, alcoholic beverages (wine, beer, spirits), tobacco, playing cards, and carbonated/sugary drinks is subject to excise tax filing at the port of entry in addition to standard customs duties.",
+        "keywords": ["car", "motorcycle", "beer", "wine", "whiskey", "spirit", "alcohol", "tobacco", "cigarette", "cigar", "soda", "sweet drink"]
+      }
+    ]
+  }
+]

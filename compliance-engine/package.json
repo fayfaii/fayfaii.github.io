@@ -1,0 +1,18 @@
+{
+  "name": "customs-compliance-engine",
+  "version": "1.0.0",
+  "description": "Cross-Agency AI Customs Compliance and Tariff Classifier",
+  "main": "engine.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.8.0",
+    "@google/generative-ai": "^0.21.0",
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
+    "html-to-text": "^10.0.0",
+    "multer": "^2.1.1"
+  }
+}
