@@ -104,11 +104,14 @@ app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
         let filePart = null;
 
         // 1. Handle Web Link Scrape
+        let isLinkBlocked = false;
         if (webLink && webLink.trim().startsWith('http')) {
             console.log(`🌐 API: Fetching content from link: ${webLink}...`);
             const webText = await fetchWebpageText(webLink.trim());
             if (webText) {
                 finalDescription += `\n\nProduct Information scraped from Web Link (${webLink}):\n\n${webText}`;
+            } else {
+                isLinkBlocked = true;
             }
         }
 
@@ -122,6 +125,14 @@ app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
                 }
             };
             finalDescription += `\n\nAttachment File: ${req.file.originalname}. (Inspect the attached file content for product details)`;
+        }
+
+        // If the link failed and no other inputs are provided, return a specific block error
+        if (isLinkBlocked && !commodityDescription.trim() && !req.file) {
+            return res.status(400).json({ 
+                success: false, 
+                error: "Could not access the website link. The website returned a 403 Forbidden error (this is common for e-commerce sites like Power Buy that use Cloudflare anti-bot security). Please copy-paste the text of the product specs into the description box instead!" 
+            });
         }
 
         if (!finalDescription.trim()) {
