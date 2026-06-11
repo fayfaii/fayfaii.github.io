@@ -93,6 +93,40 @@ function searchRegulations(query) {
     return matchedRegulations;
 }
 
+// Cache variables for uploading customs act.pdf to Gemini Files API
+let customsActFileUri = null;
+let customsActUploadedTime = null;
+
+async function getCustomsActUri(aiClient) {
+    const filePath = path.join(__dirname, 'customs act.pdf');
+    if (!fs.existsSync(filePath)) {
+        console.log("ℹ️ customs act.pdf not found in compliance-engine folder. Running audit without it.");
+        return null;
+    }
+
+    // Check if cached URI is valid (less than 24 hours old)
+    const oneDayInMs = 24 * 60 * 60 * 1000;
+    if (customsActFileUri && customsActUploadedTime && (Date.now() - customsActUploadedTime < oneDayInMs)) {
+        console.log("🔄 API: Using cached Gemini Files API URI for customs act.pdf");
+        return customsActFileUri;
+    }
+
+    try {
+        console.log("📤 API: Uploading customs act.pdf to Gemini Files API (this may take a few seconds)...");
+        const uploadResult = await aiClient.files.upload({
+            file: filePath,
+            mimeType: 'application/pdf'
+        });
+        customsActFileUri = uploadResult.uri;
+        customsActUploadedTime = Date.now();
+        console.log(`✅ API: customs act.pdf uploaded successfully! URI: ${customsActFileUri}`);
+        return customsActFileUri;
+    } catch (error) {
+        console.error("❌ API: Failed to upload customs act.pdf to Gemini Files API:", error.message);
+        return null;
+    }
+}
+
 // API Endpoint: Run Customs Compliance Audit
 app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
     try {
@@ -166,6 +200,8 @@ app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
 You are a Senior Customs Compliance Auditor and Tariff Nomenclature Classifier for the Thai Customs Department. 
 Your job is to assist officers in analyzing imports/exports.
 
+An attached reference document (the Customs Tariff Royal Decree B.E. 2564 / AHTN 2022 Tariff Schedule) may be provided in the request context. If present, consult it as the primary legal source of truth to determine the correct AHTN 8-digit tariff code and check duty categories.
+
 If an attachment file (photo or PDF) is provided, inspect it carefully. Identify the product's composition, brand, model, materials, or technical specs from the document/photo.
 
 Your output must do the following:
@@ -202,6 +238,18 @@ Analyze the following trade declaration:
             const contentParts = [systemInstructions, userPrompt];
             if (filePart) {
                 contentParts.push(filePart);
+            }
+
+            // Check and attach the Customs Act PDF reference if available
+            const customsActUri = await getCustomsActUri(ai);
+            if (customsActUri) {
+                console.log("📎 API: Attaching customs act.pdf to Gemini prompt...");
+                contentParts.push({
+                    fileData: {
+                        fileUri: customsActUri,
+                        mimeType: 'application/pdf'
+                    }
+                });
             }
 
             let result;
