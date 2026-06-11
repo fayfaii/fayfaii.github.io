@@ -90,6 +90,17 @@
                         </div>
                     </div>
 
+                    <!-- AI Provider Selector -->
+                    <div class="form-group">
+                        <label for="aiProvider">AI Provider (LLM Engine)</label>
+                        <select id="aiProvider" name="aiProvider">
+                            <option value="gemini" selected>Google Gemini (gemini-2.5-flash)</option>
+                            <option value="openai">OpenAI ChatGPT (gpt-4o-mini)</option>
+                            <option value="claude">Anthropic Claude (claude-3-5-sonnet)</option>
+                            <option value="minimax">MiniMax AI (MiniMax-M3)</option>
+                        </select>
+                    </div>
+
                     <!-- Language Selector -->
                     <div class="form-group">
                         <label for="language">Output Report Language</label>
@@ -145,7 +156,7 @@
                         <div class="tech-dot"></div>
                     </div>
                     <h3 id="loader-status">Initializing audit...</h3>
-                    <p>Gemini AI is parsing cross-agency laws and analyzing attachments.</p>
+                    <p id="loader-sub">Gemini AI is parsing cross-agency laws and analyzing attachments.</p>
                 </div>
 
                 <!-- Finished Report Content -->

@@ -1,6 +1,8 @@
 import express from 'express';
 import multer from 'multer';
 import { GoogleGenAI } from '@google/genai';
+import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -93,13 +95,24 @@ function searchRegulations(query) {
 
 // API Endpoint: Run Customs Compliance Audit
 app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        return res.status(500).json({ success: false, error: "GEMINI_API_KEY is not configured on the server." });
-    }
-
     try {
-        const { commodityDescription, originCountry, tradeDirection, language, webLink } = req.body;
+        const { commodityDescription, originCountry, tradeDirection, language, webLink, aiProvider } = req.body;
+        const provider = aiProvider || 'gemini';
+
+        // Check API key for selected provider
+        if (provider === 'gemini' && !process.env.GEMINI_API_KEY) {
+            return res.status(400).json({ success: false, error: "GEMINI_API_KEY is not configured on the server. Please add it to your .env file." });
+        }
+        if (provider === 'openai' && !process.env.OPENAI_API_KEY) {
+            return res.status(400).json({ success: false, error: "OPENAI_API_KEY is not configured on the server. Please add it to your .env file." });
+        }
+        if (provider === 'claude' && !process.env.ANTHROPIC_API_KEY) {
+            return res.status(400).json({ success: false, error: "ANTHROPIC_API_KEY is not configured on the server. Please add it to your .env file." });
+        }
+        if (provider === 'minimax' && !process.env.MINIMAX_API_KEY) {
+            return res.status(400).json({ success: false, error: "MINIMAX_API_KEY is not configured on the server. Please add it to your .env file." });
+        }
+
         let finalDescription = commodityDescription || "";
         let filePart = null;
 
@@ -145,9 +158,6 @@ app.post('/api/audit', upload.single('fileAttachment'), async (req, res) => {
             ? JSON.stringify(matchedRules, null, 2)
             : "No specific OGA restrictions found in database. Apply general customs rules.";
 
-        console.log("🧠 API: Invoking Gemini AI compliance auditor...");
-        const ai = new GoogleGenAI({ apiKey: apiKey });
-
         const languageInstruction = language === 'th'
             ? "IMPORTANT: You must write the entire report in the THAI language (ภาษาไทย) using professional Thai customs and legal terminology. Translate HS/AHTN descriptions, GIR rationales, agency names, and action checklists into fluent, professional Thai."
             : "IMPORTANT: You must write the entire report in English.";
@@ -183,36 +193,148 @@ Analyze the following trade declaration:
 - Direction: "${tradeDirection || 'Import'}"
 `;
 
-        const contentParts = [systemInstructions, userPrompt];
-        if (filePart) {
-            contentParts.push(filePart);
-        }
+        let report = "";
 
-        let result;
-        let retries = 4;
-        let delay = 3000;
-        
-        while (retries > 0) {
-            try {
-                result = await ai.models.generateContent({
-                    model: 'gemini-2.5-flash',
-                    contents: contentParts
-                });
-                break; // success, break out of loop
-            } catch (error) {
-                if (error.message.includes("503") || error.message.includes("UNAVAILABLE") || error.message.includes("demand")) {
-                    retries--;
-                    if (retries === 0) throw error;
-                    console.log(`⚠️ API: Model busy. Retrying in ${delay/1000}s...`);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2;
-                } else {
-                    throw error;
+        if (provider === 'gemini') {
+            console.log("🧠 API: Invoking Gemini AI compliance auditor...");
+            const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+            const contentParts = [systemInstructions, userPrompt];
+            if (filePart) {
+                contentParts.push(filePart);
+            }
+
+            let result;
+            let retries = 4;
+            let delay = 3000;
+            
+            while (retries > 0) {
+                try {
+                    result = await ai.models.generateContent({
+                        model: 'gemini-2.5-flash',
+                        contents: contentParts
+                    });
+                    break; // success, break out of loop
+                } catch (error) {
+                    if (error.message.includes("503") || error.message.includes("UNAVAILABLE") || error.message.includes("demand")) {
+                        retries--;
+                        if (retries === 0) throw error;
+                        console.log(`⚠️ API: Model busy. Retrying in ${delay/1000}s...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    } else {
+                        throw error;
+                    }
                 }
             }
+            report = result.text;
+
+        } else if (provider === 'openai') {
+            console.log("🧠 API: Invoking OpenAI compliance auditor...");
+            const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+            const userContent = [{ type: 'text', text: userPrompt }];
+            if (req.file) {
+                if (req.file.mimetype.startsWith('image/')) {
+                    userContent.push({
+                        type: 'image_url',
+                        image_url: {
+                            url: `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`
+                        }
+                    });
+                } else {
+                    userContent.push({
+                        type: 'text',
+                        text: `\n\n[System Note: A file named "${req.file.originalname}" of type ${req.file.mimetype} was uploaded. Note that this model only supports image uploads visually. For deep PDF scanning, please select Gemini or Claude.]`
+                    });
+                }
+            }
+
+            const response = await openai.chat.completions.create({
+                model: 'gpt-4o-mini',
+                messages: [
+                    { role: 'system', content: systemInstructions },
+                    { role: 'user', content: userContent }
+                ]
+            });
+            report = response.choices[0].message.content;
+
+        } else if (provider === 'claude') {
+            console.log("🧠 API: Invoking Anthropic Claude compliance auditor...");
+            const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+            const userContent = [{ type: 'text', text: userPrompt }];
+            if (req.file) {
+                if (req.file.mimetype.startsWith('image/')) {
+                    userContent.push({
+                        type: 'image',
+                        source: {
+                            type: 'base64',
+                            media_type: req.file.mimetype,
+                            data: req.file.buffer.toString("base64")
+                        }
+                    });
+                } else if (req.file.mimetype === 'application/pdf') {
+                    userContent.push({
+                        type: 'document',
+                        source: {
+                            type: 'base64',
+                            media_type: 'application/pdf',
+                            data: req.file.buffer.toString("base64")
+                        }
+                    });
+                } else {
+                    userContent.push({
+                        type: 'text',
+                        text: `\n\n[System Note: A file named "${req.file.originalname}" of type ${req.file.mimetype} was uploaded. Note that Claude only supports image or PDF uploads. For other types of uploads, please select Gemini.]`
+                    });
+                }
+            }
+
+            const response = await anthropic.messages.create({
+                model: 'claude-3-5-sonnet-20241022',
+                max_tokens: 4096,
+                system: systemInstructions,
+                messages: [
+                    { role: 'user', content: userContent }
+                ]
+            });
+            report = response.content[0].text;
+
+        } else if (provider === 'minimax') {
+            console.log("🧠 API: Invoking MiniMax compliance auditor...");
+            const minimax = new OpenAI({
+                baseURL: process.env.MINIMAX_BASE_URL || 'https://api.minimax.io/v1',
+                apiKey: process.env.MINIMAX_API_KEY
+            });
+
+            const userContent = [{ type: 'text', text: userPrompt }];
+            if (req.file) {
+                if (req.file.mimetype.startsWith('image/')) {
+                    userContent.push({
+                        type: 'image_url',
+                        image_url: {
+                            url: `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`
+                        }
+                    });
+                } else {
+                    userContent.push({
+                        type: 'text',
+                        text: `\n\n[System Note: A file named "${req.file.originalname}" of type ${req.file.mimetype} was uploaded. Note that this model only supports image uploads visually. For deep PDF scanning, please select Gemini or Claude.]`
+                    });
+                }
+            }
+
+            const response = await minimax.chat.completions.create({
+                model: 'MiniMax-M3',
+                messages: [
+                    { role: 'system', content: systemInstructions },
+                    { role: 'user', content: userContent }
+                ]
+            });
+            report = response.choices[0].message.content;
         }
 
-        const report = result.text;
         res.json({ success: true, report });
 
     } catch (error) {

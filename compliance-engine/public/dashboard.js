@@ -135,6 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('tradeDirection', document.getElementById('tradeDirection').value);
         formData.append('webLink', webLink);
         
+        // Get selected AI Provider
+        const aiProvider = document.getElementById('aiProvider').value;
+        formData.append('aiProvider', aiProvider);
+        
         // Get selected language
         const language = document.querySelector('input[name="language"]:checked').value;
         formData.append('language', language);
@@ -150,12 +154,27 @@ document.addEventListener('DOMContentLoaded', () => {
         loader.classList.remove('hidden');
         submitBtn.setAttribute('disabled', 'true');
 
+        // Map provider value to user-friendly name
+        const providerNameMap = {
+            'gemini': 'Google Gemini',
+            'openai': 'OpenAI ChatGPT',
+            'claude': 'Anthropic Claude',
+            'minimax': 'MiniMax AI'
+        };
+        const providerName = providerNameMap[aiProvider] || 'AI Engine';
+
+        // Update loader subtitle
+        const loaderSub = document.getElementById('loader-sub');
+        if (loaderSub) {
+            loaderSub.textContent = `${providerName} is parsing cross-agency laws and analyzing attachments.`;
+        }
+
         // Dynamic status changer during API call (gives a premium "processing" feel)
         const statusesEn = [
             "Analyzing product parameters...",
             "Checking local cross-agency RAG database...",
             "Consulting regulatory statutes...",
-            "Invoking Gemini Multimodal AI...",
+            `Invoking ${providerName}...`,
             "Drafting trade compliance audit report..."
         ];
 
@@ -163,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "กำลังประเมินคุณลักษณะของสินค้า...",
             "กำลังสืบค้นข้อกฎหมายหน่วยงานร่วม (RAG)...",
             "กำลังตรวจสอบข้อกำหนดเชิงนโยบาย...",
-            "กำลังประมวลผลข้อมูลผ่านระบบปัญญาประดิษฐ์ (Gemini)...",
+            `กำลังประมวลผลข้อมูลผ่านระบบปัญญาประดิษฐ์ (${providerName})...`,
             "กำลังร่างรายงานผลการตรวจสอบพิกัดและกฎหมายศุลกากร..."
         ];
 
